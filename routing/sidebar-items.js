@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["back",""],["decode_uri_component",""],["encode_uri_component",""],["origin",""],["url",""]],"struct":[["Router",""]],"trait":[["FromRouteSegments",""],["RouteSegment",""]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["IdFlagNotSet",""],["IdFlagSet",""],["LabelFlagNotSet",""],["LabelFlagSet",""],["OnChangeFlagNotSet",""],["OnChangeFlagSet",""],["PlaceholderFlagNotSet",""],["PlaceholderFlagSet",""],["ReadOnlyFlagNotSet",""],["ReadOnlyFlagSet",""],["TextArea",""],["TextFlagNotSet",""],["TextFlagSet",""]]};

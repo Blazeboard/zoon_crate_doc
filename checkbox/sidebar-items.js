@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["default_icon",""]],"struct":[["Checkbox",""],["CheckedFlagNotSet",""],["CheckedFlagSet",""],["IconFlagNotSet",""],["IconFlagSet",""],["IdFlagNotSet",""],["IdFlagSet",""],["LabelFlagNotSet",""],["LabelFlagSet",""],["OnChangeFlagNotSet",""],["OnChangeFlagSet",""]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["RawHtmlEl",""],["RawSvgEl",""]],"trait":[["RawEl",""],["UpdateRawEl",""]]};
