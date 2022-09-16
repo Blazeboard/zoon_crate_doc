@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["FsEventWatcher","FSEvents-based `Watcher` implementation"]]};

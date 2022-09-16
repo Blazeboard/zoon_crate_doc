@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"trait":[["BoolExt","`BoolExt` trait defines and implements a complete set of Boolean functional combinators."]]};

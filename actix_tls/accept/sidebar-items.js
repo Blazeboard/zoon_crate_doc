@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["TlsError","TLS handshake error, TLS timeout, or inner service error."]],"fn":[["max_concurrent_tls_connect","Sets the maximum per-worker concurrent TLS connection limit."]],"mod":[["rustls","`rustls` based TLS connection acceptor service."]]};

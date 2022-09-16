@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Error",""]],"fn":[["find_ifa","Finds the network interface with the provided name in the vector of network interfaces provided"],["local_ip","Retrieves the local ip address of the machine in the local network from the `AF_INET` family."]],"mod":[["macos",""]]};

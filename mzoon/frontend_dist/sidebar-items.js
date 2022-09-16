@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":[["API_DIR",""],["FRONTEND_DIST_DIR",""]],"fn":[["copy_pkg_public_sync",""],["create_frontend_dist",""],["create_hosting_files",""],["recreate_api_dir_with_frontend_dist",""],["recreate_index_html",""]]};

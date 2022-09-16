@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["that",""],["that_in_background","Convenience function for opening the passed path in a new thread. See documentation of `that(...)` for more details."],["with",""],["with_in_background",""]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["compressed_file_path",""]],"struct":[["BrotliFileCompressor",""],["GzipFileCompressor",""]],"trait":[["FileCompressor",""]]};

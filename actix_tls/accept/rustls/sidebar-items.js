@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["reexports","Re-exports from `rustls` that are useful for acceptors."]],"struct":[["Acceptor","Accept TLS connections via the `rustls` crate."],["AcceptorService","Rustls based acceptor service."],["TlsStream","Wraps a `rustls` based async TLS stream in order to implement [`ActixStream`]."]]};

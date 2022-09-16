@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"macro":[["enc","Macro for cloning values to close. Alternative short record."],["enclose","Macro for cloning values to close."],["run_enc","To create and start short circuit. Alternative short record."],["run_enclose","To create and start short circuit."]]};

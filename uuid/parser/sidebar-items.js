@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Expected","The expected value."],["ParseError","An error that can occur while parsing a `Uuid` string."]]};

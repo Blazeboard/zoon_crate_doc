@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Identifier","Helper enum for holding data of alphanumeric or numeric suffix identifiers."]],"fn":[["parse","Function for parsing version string to `Version`."]],"struct":[["Version","Structure representing version data."]]};

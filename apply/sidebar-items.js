@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"trait":[["Also","Represents a type that you can apply arbitrary functions to. Useful for when a method doesn’t return the receiver but you want to apply several of them to the object."],["Apply","Represents a type which can have functions applied to it (implemented by default for all types)."]]};

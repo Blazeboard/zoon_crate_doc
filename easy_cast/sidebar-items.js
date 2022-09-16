@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Error","Error types for conversions"]],"trait":[["Cast","Like [`Into`], but for [`Conv`]"],["CastFloat","Like [`Into`], but for [`ConvFloat`]"],["Conv","Like [`From`], but supporting potentially-fallible conversions"],["ConvFloat","Nearest / floor / ceil conversions from floating point types"]]};

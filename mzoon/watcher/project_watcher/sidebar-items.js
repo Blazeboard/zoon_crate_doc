@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["configure_watcher",""],["debounce",""],["debounced_on_change",""],["on_change",""],["start_immediate_watcher",""]],"struct":[["ProjectWatcher",""]]};

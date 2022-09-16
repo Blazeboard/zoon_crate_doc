@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["mzoon"] = [{"text":"impl <a class=\"trait\" href=\"clap/derive/trait.ValueEnum.html\" title=\"trait clap::derive::ValueEnum\">ValueEnum</a> for <a class=\"enum\" href=\"mzoon/enum.Hosting.html\" title=\"enum mzoon::Hosting\">Hosting</a>","synthetic":false,"types":["mzoon::Hosting"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
