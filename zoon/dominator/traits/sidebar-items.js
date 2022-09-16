@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"trait":[["AsStr",""],["Mixin",""],["MultiStr",""],["OptionStr",""],["StaticEvent",""]]};

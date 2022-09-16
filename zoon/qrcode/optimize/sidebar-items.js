@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["total_encoded_len","Computes the total encoded length of all segments."]],"struct":[["Optimizer",""],["Parser","QR code data parser to classify the input into distinct segments."],["Segment","A segment of data committed to an encoding mode."]]};

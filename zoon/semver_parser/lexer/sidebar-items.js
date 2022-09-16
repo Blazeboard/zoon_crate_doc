@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Error",""],["Token","Semver tokens."]],"struct":[["Lexer","Lexer for semver tokens belonging to a range."]]};

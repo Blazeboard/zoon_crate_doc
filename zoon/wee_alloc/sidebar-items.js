@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":[["PAGE_SIZE","The WebAssembly page size, in bytes."]],"struct":[["WeeAlloc","A wee allocator."]]};

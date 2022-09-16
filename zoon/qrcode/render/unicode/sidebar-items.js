@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["Dense1x2",""]],"struct":[["Canvas1x2",""]]};

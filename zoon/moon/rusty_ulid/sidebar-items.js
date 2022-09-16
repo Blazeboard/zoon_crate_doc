@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["DecodingError","Error that can occur while decoding a crockford Base32 string."]],"fn":[["generate_ulid_bytes","Returns new ULID bytes."],["generate_ulid_string","Returns a new ULID string."]],"mod":[["crockford","Contains functions for encoding and decoding of crockford Base32 strings."]],"struct":[["Ulid","The ULID data type."]]};

@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="`Again` is a wasm-compatible utility for retrying standard library `Futures` with a `Result` output type"><meta name="keywords" content="rust, rustlang, rust-lang, again"><title>again - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../dark.css" disabled><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script defer src="../crates.js"></script><script defer src="../main.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../again/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../again/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"><a href="#">Crate again</a></h2><div class="sidebar-elems"><div class="block"><ul><li class="version">Version 0.1.2</li><li><a id="all-types" href="all.html">All Items</a></li></ul></div><section><div class="block"><ul><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div></section></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../again/index.html"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
+                                <a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="main-heading">
+    <h1 class="fqn"><span class="in-band">Crate <a class="mod" href="#">again</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/again/lib.rs.html#1-484">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p><code>Again</code> is a wasm-compatible utility for retrying standard library <a href="https://doc.rust-lang.org/std/future/trait.Future.html"><code>Futures</code></a> with a <code>Result</code> output type</p>
+<p>A goal of any operation should be a successful outcome. This crate gives operations a better chance at achieving that.</p>
+<h2 id="examples"><a href="#examples">Examples</a></h2><h3 id="hello-world"><a href="#hello-world">Hello world</a></h3>
+<p>For simple cases, you can use the module level <a href="fn.retry.html"><code>retry</code></a> fn, which
+will retry a task every second for 5 seconds with an exponential backoff.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="ident">again::retry</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">reqwest::get</span>(<span class="string">&quot;https://api.company.com&quot;</span>));</code></pre></div>
+<h3 id="conditional-retries"><a href="#conditional-retries">Conditional retries</a></h3>
+<p>By default, <code>again</code> will retry any failed <code>Future</code> if its <code>Result</code> output type is an <code>Err</code>.
+You may not want to retry <em>every</em> kind of error. In those cases you may wish to use the <a href="fn.retry_if.html"><code>retry_if</code></a> fn, which
+accepts an additional argument to conditionally determine if the error
+should be retried.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="ident">again::retry_if</span>(
+    <span class="op">|</span><span class="op">|</span> <span class="ident">reqwest::get</span>(<span class="string">&quot;https://api.company.com&quot;</span>),
+    <span class="ident">reqwest::Error::is_status</span>,
+);</code></pre></div>
+<h3 id="retry-policies"><a href="#retry-policies">Retry policies</a></h3>
+<p>Every application has different needs. The default retry behavior in <code>again</code>
+likely will not suit all of them. You can define your own retry behavior
+with a <a href="struct.RetryPolicy.html"><code>RetryPolicy</code></a>. A RetryPolicy can be configured with a fixed or exponential backoff,
+jitter, and other common retry options. This objects may be reused
+across operations. For more information see the <a href="struct.RetryPolicy.html"><code>RetryPolicy</code></a> docs.</p>
+
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore"><code><span class="kw">use</span> <span class="ident">again::RetryPolicy</span>;
+<span class="kw">use</span> <span class="ident">std::time::Duration</span>;
+
+<span class="kw">let</span> <span class="ident">policy</span> <span class="op">=</span> <span class="ident">RetryPolicy::fixed</span>(<span class="ident">Duration::from_millis</span>(<span class="number">100</span>))
+    .<span class="ident">with_max_retries</span>(<span class="number">10</span>)
+    .<span class="ident">with_jitter</span>(<span class="bool-val">false</span>);
+
+<span class="ident">policy</span>.<span class="ident">retry</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">reqwest::get</span>(<span class="string">&quot;https://api.company.com&quot;</span>));</code></pre></div>
+<h2 id="logging"><a href="#logging">Logging</a></h2>
+<p>For visibility on when operations fail and are retried, a <code>log::trace</code> message is emitted,
+logging the <code>Debug</code> display of the error and the delay before the next attempt.</p>
+<h2 id="wasm-features"><a href="#wasm-features">wasm features</a></h2>
+<p><code>again</code> supports <a href="https://webassembly.org/">WebAssembly</a> targets i.e. <code>wasm32-unknown-unknown</code> which should make this
+crate a good fit for most environments</p>
+<p>Two cargo features exist to support various wasm runtimes: <code>wasm-bindgen</code> and <code>stdweb</code>.
+To enable them add the following to your <code>Cargo.toml</code> file.</p>
+<div class="example-wrap"><pre class="language-toml"><code>[dependencies]
+again = { version = &quot;xxx&quot;, features = [&quot;wasm-bindgen&quot;] }</code></pre></div></div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.RetryPolicy.html" title="again::RetryPolicy struct">RetryPolicy</a></div><div class="item-right docblock-short"><p>A template for configuring retry behavior</p>
+</div></div></div><h2 id="traits" class="small-section-header"><a href="#traits">Traits</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.Condition.html" title="again::Condition trait">Condition</a></div><div class="item-right docblock-short"><p>A type to determine if a failed Future should be retried</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.Task.html" title="again::Task trait">Task</a></div><div class="item-right docblock-short"><p>A unit of work to be retried</p>
+</div></div></div><h2 id="functions" class="small-section-header"><a href="#functions">Functions</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.retry.html" title="again::retry fn">retry</a></div><div class="item-right docblock-short"><p>Retries a fallible <code>Future</code> with a default <code>RetryPolicy</code></p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.retry_if.html" title="again::retry_if fn">retry_if</a></div><div class="item-right docblock-short"><p>Retries a fallible <code>Future</code> under a certain provided conditions with a default <code>RetryPolicy</code></p>
+</div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="again" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0 (4b91a6ea7 2022-08-08)" ></div>
+</body></html>

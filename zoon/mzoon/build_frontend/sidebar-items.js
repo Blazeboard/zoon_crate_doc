@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["build_frontend",""],["compile_with_cargo",""],["compress_pkg",""],["create_compressed_files",""],["remove_pkg",""],["rename_js_file",""],["rename_wasm_file",""],["write_build_id",""]]};

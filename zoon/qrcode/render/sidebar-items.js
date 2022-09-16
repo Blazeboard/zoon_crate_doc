@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["string","String rendering support."],["unicode","UTF-8 rendering, with 2 pixels per symbol."]],"struct":[["Renderer","A QR code renderer. This is a builder type which converts a bool-vector into an image."]],"trait":[["Canvas","Rendering canvas of a QR code image."],["Pixel","Abstraction of an image pixel."]]};

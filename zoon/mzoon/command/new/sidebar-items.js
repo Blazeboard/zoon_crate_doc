@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["new",""],["postprocess_project_files",""],["replace_in_file",""]],"static":[["NEW_PROJECT_TAR",""]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["NodeContent",""],["NodeMetadata",""]],"fn":[["tree_into_pairs",""]],"struct":[["StackItem",""]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":[["VERSION",""]],"fn":[["check_or_install_wasm_opt",""],["check_wasm_opt",""],["optimize_with_wasm_opt",""],["unpack_wasm_opt",""]]};

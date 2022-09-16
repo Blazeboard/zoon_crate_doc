@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Concurrent hash maps."><meta name="keywords" content="rust, rustlang, rust-lang, chashmap"><title>chashmap - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../dark.css" disabled><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script defer src="../crates.js"></script><script defer src="../main.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../chashmap/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../chashmap/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"><a href="#">Crate chashmap</a></h2><div class="sidebar-elems"><div class="block"><ul><li class="version">Version 2.2.2</li><li><a id="all-types" href="all.html">All Items</a></li></ul></div><section><div class="block"><ul><li><a href="#structs">Structs</a></li></ul></div></section></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../chashmap/index.html"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
+                                <a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="main-heading">
+    <h1 class="fqn"><span class="in-band">Crate <a class="mod" href="#">chashmap</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/chashmap/lib.rs.html#1-1019">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Concurrent hash maps.</p>
+<p>This crate implements concurrent hash maps, based on bucket-level multi-reader locks. It has
+excellent performance characteristics¹ and supports resizing, in-place mutation and more.</p>
+<p>The API derives directly from <code>std::collections::HashMap</code>, giving it a familiar feel.</p>
+<p>¹Note that it heavily depends on the behavior of your program, but in most cases, it’s really
+good. In some (rare) cases you might want atomic hash maps instead.</p>
+<h2 id="how-it-works"><a href="#how-it-works">How it works</a></h2>
+<p><code>chashmap</code> is not lockless, but it distributes locks across the map such that lock contentions
+(which is what could make accesses expensive) are very rare.</p>
+<p>Hash maps consists of so called “buckets”, which each defines a potential entry in the table.
+The bucket of some key-value pair is determined by the hash of the key. By holding a read-write
+lock for each bucket, we ensure that you will generally be able to insert, read, modify, etc.
+with only one or two locking subroutines.</p>
+<p>There is a special-case: reallocation. When the table is filled up such that very few buckets
+are free (note that this is “very few” and not “no”, since the load factor shouldn’t get too
+high as it hurts performance), a global lock is obtained while rehashing the table. This is
+pretty inefficient, but it rarely happens, and due to the adaptive nature of the capacity, it
+will only happen a few times when the map has just been initialized.</p>
+<h3 id="collision-resolution"><a href="#collision-resolution">Collision resolution</a></h3>
+<p>When two hashes collide, they cannot share the same bucket, so there must be an algorithm which
+can resolve collisions. In our case, we use linear probing, which means that we take the bucket
+following it, and repeat until we find a free bucket.</p>
+<p>This method is far from ideal, but superior methods like Robin-Hood hashing works poorly (if at
+all) in a concurrent structure.</p>
+<h2 id="the-api"><a href="#the-api">The API</a></h2>
+<p>The API should feel very familiar, if you are used to the libstd hash map implementation. They
+share many of the methods, and I’ve carefully made sure that all the items, which have similarly
+named items in libstd, matches in semantics and behavior.</p>
+</div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.CHashMap.html" title="chashmap::CHashMap struct">CHashMap</a></div><div class="item-right docblock-short"><p>A concurrent hash map.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.IntoIter.html" title="chashmap::IntoIter struct">IntoIter</a></div><div class="item-right docblock-short"><p>An iterator over the entries of some table.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.ReadGuard.html" title="chashmap::ReadGuard struct">ReadGuard</a></div><div class="item-right docblock-short"><p>A RAII guard for reading an entry of a hash map.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.WriteGuard.html" title="chashmap::WriteGuard struct">WriteGuard</a></div><div class="item-right docblock-short"><p>A mutable RAII guard for reading an entry of a hash map.</p>
+</div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="chashmap" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0 (4b91a6ea7 2022-08-08)" ></div>
+</body></html>

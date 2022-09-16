@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"macro":[["gensym","Generate a unique identifier with a span of `Span::call_site` and insert it as the first argument to a macro call followed by a comma."]]};

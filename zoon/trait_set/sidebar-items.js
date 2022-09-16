@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"macro":[["trait_set","Creates an alias for set of traits."]]};

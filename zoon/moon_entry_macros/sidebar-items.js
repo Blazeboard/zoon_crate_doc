@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"attr":[["main","Marks async main function as the Moon system entry-point."],["test","Marks async test functions to use the Moon system entry-point."]]};

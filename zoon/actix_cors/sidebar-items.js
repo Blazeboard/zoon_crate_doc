@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["CorsError","Errors that can occur when processing CORS guarded requests."]],"struct":[["Cors","Builder for CORS middleware."]]};

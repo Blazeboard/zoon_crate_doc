@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="ULID - Universally Unique Lexicographically Sortable Identifier"><meta name="keywords" content="rust, rustlang, rust-lang, rusty_ulid"><title>moon::rusty_ulid - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../crates.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../moon/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../../moon/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"><a href="#">Crate rusty_ulid</a></h2><div class="sidebar-elems"><div class="block"><ul><li class="version">Version 0.1.0</li><li><a id="all-types" href="all.html">All Items</a></li></ul></div><section><div class="block"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#functions">Functions</a></li></ul></div></section></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../moon/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
+                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="main-heading">
+    <h1 class="fqn"><span class="in-band">Crate <a href="../index.html">moon</a>::<wbr><a class="mod" href="#">rusty_ulid</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../../src/rusty_ulid/lib.rs.html#40-1667">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="ulid---universally-unique-lexicographically-sortable-identifier"><a href="#ulid---universally-unique-lexicographically-sortable-identifier">ULID - Universally Unique Lexicographically Sortable Identifier</a></h2>
+<p>UUID can be suboptimal for many uses-cases because:</p>
+<ul>
+<li>It isn’t the most character efficient way of encoding 128 bits of randomness</li>
+<li>UUID v1/v2 is impractical in many environments, as it requires access to a unique, stable MAC address</li>
+<li>UUID v3/v5 requires a unique seed and produces randomly distributed IDs, which can cause fragmentation in many data structures</li>
+<li>UUID v4 provides no other information than randomness which can cause fragmentation in many data structures</li>
+</ul>
+<p>Instead, herein is proposed <a href="https://github.com/ulid/spec">ULID</a>:</p>
+<p><code>01ARZ3NDEKTSV4RRFFQ69G5FAV</code></p>
+<ul>
+<li>128-bit compatibility with UUID</li>
+<li>1.21e+24 unique ULIDs per millisecond</li>
+<li>Lexicographically sortable!</li>
+<li>Canonically encoded as a 26 character string, as opposed to the 36 character UUID</li>
+<li>Uses <a href="https://crockford.com/wrmg/base32.html">Crockford’s base32</a> for better efficiency and readability (5 bits per character)</li>
+<li>Case insensitive</li>
+<li>No special characters (URL safe)</li>
+<li>Monotonic sort order (correctly detects and handles the same millisecond)</li>
+</ul>
+<h3 id="specification"><a href="#specification">Specification</a></h3>
+<p>Below is the current specification of <a href="https://github.com/ulid/spec">ULID</a> as implemented in this crate.</p>
+<div class="example-wrap"><pre class="language-text"><code> 01AN4Z07BY      79KA1307SR9X4MV3
+
+|----------|    |----------------|
+ Timestamp          Randomness
+   48bits             80bits</code></pre></div><h4 id="components"><a href="#components">Components</a></h4><h5 id="timestamp"><a href="#timestamp">Timestamp</a></h5>
+<ul>
+<li>48 bit integer</li>
+<li>UNIX-time in milliseconds</li>
+<li>Won’t run out of space until <code>+10889-08-02T05:31:50.655Z</code>.</li>
+</ul>
+<h5 id="randomness"><a href="#randomness">Randomness</a></h5>
+<ul>
+<li>80 bits</li>
+<li>Cryptographically secure source of randomness, if possible</li>
+</ul>
+<h4 id="sorting"><a href="#sorting">Sorting</a></h4>
+<p>The left-most character must be sorted first, and the right-most character
+sorted last (lexical order). The default ASCII character set must be used.
+Within the same millisecond, sort order is not guaranteed</p>
+<h4 id="canonical-string-representation"><a href="#canonical-string-representation">Canonical String Representation</a></h4><div class="example-wrap"><pre class="language-text"><code>ttttttttttrrrrrrrrrrrrrrrr
+
+where
+t is Timestamp (10 characters)
+r is Randomness (16 characters)</code></pre></div><h4 id="encoding"><a href="#encoding">Encoding</a></h4>
+<p><a href="https://crockford.com/wrmg/base32.html">Crockford’s Base32</a> is used as shown.
+This alphabet excludes the letters I, L, O, and U to avoid confusion and abuse.</p>
+<p><code>0123456789ABCDEFGHJKMNPQRSTVWXYZ</code></p>
+<h4 id="monotonicity"><a href="#monotonicity">Monotonicity</a></h4>
+<p>When generating a ULID within the same millisecond, we can provide some
+guarantees regarding sort order. Namely, if the same millisecond is detected,
+the <code>random</code> component is incremented by 1 bit in the least significant bit position
+(with carrying).</p>
+<p>If, in the extremely unlikely event that, you manage to generate more than 2<sup>80</sup>
+ULIDs within the same millisecond, or cause the random component to overflow with less,
+the generation will fail.</p>
+<h4 id="overflow-errors-when-parsing-base32-strings"><a href="#overflow-errors-when-parsing-base32-strings">Overflow Errors when Parsing Base32 Strings</a></h4>
+<p>Technically, a 26-character Base32 encoded string can contain 130 bits of
+information, whereas a ULID must only contain 128 bits. Therefore, the largest
+valid ULID encoded in Base32 is <code>7ZZZZZZZZZZZZZZZZZZZZZZZZZ</code>, which corresponds to
+an epoch time of <code>281474976710655</code> or <code>2 ^ 48 - 1</code>.</p>
+<p>Any attempt to decode or encode a ULID larger than this should be rejected by all
+implementations, to prevent overflow bugs.</p>
+<h4 id="binary-layout-and-byte-order"><a href="#binary-layout-and-byte-order">Binary Layout and Byte Order</a></h4>
+<p>The components are encoded as 16 octets. Each component is encoded with the
+Most Significant Byte first (network byte order).</p>
+<div class="example-wrap"><pre class="language-text"><code>0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                      32_bit_uint_time_high                    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|     16_bit_uint_time_low      |       16_bit_uint_random      |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                       32_bit_uint_random                      |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                       32_bit_uint_random                      |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</code></pre></div></div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="crockford/index.html" title="moon::rusty_ulid::crockford mod">crockford</a></div><div class="item-right docblock-short"><p>Contains functions for encoding and decoding of
+<a href="https://crockford.com/wrmg/base32.html">crockford Base32</a> strings.</p>
+</div></div></div><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Ulid.html" title="moon::rusty_ulid::Ulid struct">Ulid</a></div><div class="item-right docblock-short"><p>The ULID data type.</p>
+</div></div></div><h2 id="enums" class="small-section-header"><a href="#enums">Enums</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.DecodingError.html" title="moon::rusty_ulid::DecodingError enum">DecodingError</a></div><div class="item-right docblock-short"><p>Error that can occur while decoding a <a href="https://crockford.com/wrmg/base32.html">crockford Base32</a> string.</p>
+</div></div></div><h2 id="functions" class="small-section-header"><a href="#functions">Functions</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.generate_ulid_bytes.html" title="moon::rusty_ulid::generate_ulid_bytes fn">generate_ulid_bytes</a></div><div class="item-right docblock-short"><p>Returns new ULID bytes.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.generate_ulid_string.html" title="moon::rusty_ulid::generate_ulid_string fn">generate_ulid_string</a></div><div class="item-right docblock-short"><p>Returns a new ULID string.</p>
+</div></div></div></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="moon" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0 (4b91a6ea7 2022-08-08)" ></div>
+</body></html>

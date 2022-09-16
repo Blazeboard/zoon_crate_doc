@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"static":[["CONFIG",""]],"struct":[["Config",""],["Cors",""],["Lazy","A value which is initialized on the first access."],["Redirect",""]]};
